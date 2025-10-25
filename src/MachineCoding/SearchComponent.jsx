@@ -7,7 +7,7 @@
 // Wait for "300ms" before filtering again and reset the list if the input is cleared.
 
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const dataList = [
   { id: 1, name: "Apple" },
@@ -20,16 +20,41 @@ const dataList = [
 function SearchComponent() {
   const [query, setQuery] = useState("");
   const [filteredData, setFilteredData] = useState(dataList);
+  const debounceRef = useRef(null);
 
+
+  useEffect(() => {
+    const results = dataList.filter((i) => i.name.toLowerCase().includes(query.toLowerCase()));
+    setFilteredData(results)
+  }, [query])
+
+  const debounce = (fn, delay) => {
+    return (...args) => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+      debounceRef.current = setTimeout(() => fn(...args), delay);
+    }
+  }
+
+  const handleChange = useCallback(
+    debounce((e) => {
+      setQuery(e.target.value);
+    }, 300), []);
 
   return (
     <div>
       <input
         type="text"
-        value={query}
+        // value={query} uncontrolled input issue
+        onChange={handleChange}
       />
       <ul>
-
+        {
+          filteredData.map((item) =>
+            <li key={item.id}>{item.name}</li>
+          )
+        }
       </ul>
     </div>
   );
