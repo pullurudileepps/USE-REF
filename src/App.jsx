@@ -1,10 +1,10 @@
-import "./App.css";
-import SearchComponent from "./MachineCoding/SearchComponent";
+import Header from "./LLD-React_Currency_Converter_Hook";
+// import SearchComponent from "./MachineCoding/SearchComponent";
 
 function App() {
   return (
-    <div className="App">
-      <SearchComponent />
+    <div>
+      <Header />
     </div>
   );
 }
