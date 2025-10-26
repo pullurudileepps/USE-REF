@@ -17,19 +17,33 @@ function Header() {
 
   // Create hook instances
   // Ex :- const convertUsdToEur = useCurrencyConverter("USD", "EUR");
-
+  const convertUsdToEur = useCurrencyConverter("USD", "EUR");
+  const convertEurToUsd = useCurrencyConverter("EUR", "USD");
+  const convertGbpToUsd = useCurrencyConverter("GBP", "USD");
   // Create event handlers
 
   const handleUsdAmountChange = (event) => {
+    const value = event.target.value;
+    setUsdAmount(value);
     // Implement the function here
+    const result = convertUsdToEur(value)
+    setConvertedEur(result || '')
   };
 
   const handleEurAmountChange = (event) => {
+    const value = event.target.value;
+    setEurAmount(value);
     // Implement the function here
+    const result = convertEurToUsd(value)
+    setConvertedUsdFromEur(result || '')
   };
 
   const handleGbpAmountChange = (event) => {
+    const value = event.target.value;
+    setGbpAmount(value);
     // Implement the function here
+    const result = convertGbpToUsd(value);
+    setConvertedUsdFromGbp(result || '')
   };
 
   // do not edit the return statement
